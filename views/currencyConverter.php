@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -32,6 +32,7 @@
             border: none;
         }
     </style>
+    
 </head>
 <body>
 <div class="currency-section text-center pt-5 bg-primary-subtle">
@@ -45,52 +46,70 @@
             <div class="row g-3 align-items-center">
                 <div class="col-md-5">
                     <label for="amount" class="form-label visually-hidden">Amount</label>
-                    <input type="number" id="amount" class="form-control" placeholder="Amount" value="10000">
+                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" value="10000">
                 </div>
                 <div class="col-md-3 text-center">
-                    <select class="form-select" name = "from">
+                    <select class="form-select" name="from">
                         <?php
-                        global $currencsie;
-                        foreach ($currencies as $key => $currency){
-                            if ($count1 >= 5){
-                                break;
-                            }
+                        global $currencies;
+                        foreach ($currencies as $key => $currencyy) {
+                            
                             echo '<option value="' . $key . '">' . $key . '</option>';
-                            $count1++;
+                            
                         }
                         ?>
+                        <option value="UZS">UZS</option>
                     </select>
                 </div>
                 <div class="col-md-1 text-center">
-                    <span>⇆</span>
+                    <span style="color: hold black">⇆</span>
+                    
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" name = "from">
-                      <?php
-                      global $currencies; 
-                      foreach ($currencies as $key => $currency) {
-                            if ($count >= 5){
-                              break;
-                            }
+                    <select class="form-select" name="to">
+                      
+                        <option value=""> UZS </option>
+                        <?php
+                        global $currencies;
+                        foreach ($currencies as $key => $currencyy) {
+                            
                             echo '<option value="' . $key . '">' . $key . '</option>';
-                            $count++;
-                          }
-                  ?>
-                  
+                            
+                        }
+                        ?>  
+                      
                     </select>
                 </div>
             </div>
-            <p class="rate-info mt-2">1.00 USD = 12,862.73 UZS <i class="bi bi-info-circle"></i></p>
-            <button type="submit" class="btn btn-primary btn-primary-custom mt-3">Convert</button>
-        </form>
-    </div>
+            <p class="rate-info mt-2">
+            <?php
+                        if (isset($_GET['amount']) && isset($_GET['from'])) {
+                            if ($_GET['from'] == 'UZS'){
+                                $total = (int)$_GET["amount"] / (int)$currency->getCurrencies()[$_GET["to"]];
+                                echo $_GET["amount"] ." USZ = ". $total ." ". $_GET['to']; 
+                                
+                            }
+                            else{
+                                var_dump($_GET["from"]);
+                                $total = (int)$_GET['amount'] * (int)$currency->getCurrencies()[$_GET['from']];
+                                echo $_GET['amount'] ." ". $_GET['from'] ." = ". $total ." USZ";
+                                
+                            }
+                    }
+                    ?>
+                    <i class="bi bi-info-circle"></i></p>
+
+            
+<button type="submit" class="btn btn-primary btn-primary-custom mt-3">Convert</button>
+</form>
+</div>
 </div>
 <div class="info-section bg-light">
-    <h4 class="fw-bold">Let’s save you some time</h4>
-    <p class="text-muted">If you’ve got a target exchange rate in mind but haven’t got time to keep tabs on market
-        movement, then a firm order could be perfect for you. When your chosen rate is reached, we’ll act immediately,
-        leaving you free to concentrate on your business.</p>
-    <button class="btn btn-outline-danger">Find out more</button>
+<h4 class="fw-bold">Let’s save you some time</h4>
+<p class="text-muted">If you’ve got a target exchange rate in mind but haven’t got time to keep tabs on market
+movement, then a firm order could be perfect for you. When your chosen rate is reached, we’ll act immediately,
+leaving you free to concentrate on your business.</p>
+<button class="btn btn-outline-danger">Find out more</button>
 </div>
 </body>
 </html>

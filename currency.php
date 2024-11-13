@@ -26,9 +26,14 @@ class Currency {
     }
 
     public function exchange($value, $currency_name = 'USD') {
-        echo ceil($value / $this->getCurrencies()[$currency_name]) . ' ' . $currency_name;
+       
     }
+
+    
+    
+
 }
+
 
 
 $currency = new Currency();
