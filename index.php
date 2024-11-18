@@ -1,12 +1,12 @@
 <?php
 
+
+
 require 'src/Currency.php';
 
 $currency = new Currency();
 
 $currencies = $currency->getCurrencies();
-
-
 
 
 

@@ -71,9 +71,9 @@
                         <option value=""> UZS </option>
                         <?php
                         global $currencies;
-                        foreach ($currencies as $key => $currencyy) {
+                        foreach ($currencies as $key => $currency){
                             
-                            echo '<option value="' . $key . '">' . $key . '</option>';
+                            echo '<option value="'. $key. '">'. $key. '</option>';
                             
                         }
                         ?>  
