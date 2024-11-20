@@ -1,40 +1,58 @@
 <?php
 
-class Currency {
+require 'vendor/autoload.php'; // Ensure Guzzle is included via Composer
 
+use GuzzleHttp\Client;
+
+class Currency
+{
     const CURRENCY_API_URL = "https://cbu.uz/uz/arkhiv-kursov-valyut/json/";
 
-    public array $currencies = [];    
+    private array $currencies = [];
 
-    public function __construct() {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::CURRENCY_API_URL);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $this->currencies = json_decode($output);
+    public function __construct()
+    {
+        $client = new Client();
+        try {
+            $response = $client->get(self::CURRENCY_API_URL);
+            if ($response->getStatusCode() === 200) {
+                $this->currencies = json_decode($response->getBody()->getContents());
+            }
+        } catch (\Exception $e) {
+            throw new Exception("Failed to fetch currency data: " . $e->getMessage());
+        }
     }
 
-    public function getCurrencies(): array {
+    public function getCurrencies(): array
+    {
         $separated_data = [];
-        $currencies_info = $this->currencies; 
-        foreach ($currencies_info as $currency) {
+        foreach ($this->currencies as $currency) {
             $separated_data[$currency->Ccy] = $currency->Rate;
         }
         return $separated_data;
     }
 
-    public function exchange($value, $currency_name = 'USD') {
-       
+    public function exchange(float $amount, string $from = 'USD', string $to = 'UZS'): float
+    {
+        $currencies = $this->getCurrencies();
+
+        if (!isset($currencies[$from]) && $from !== 'UZS') {
+            throw new Exception("Invalid source currency: $from");
+        }
+        if (!isset($currencies[$to]) && $to !== 'UZS') {
+            throw new Exception("Invalid target currency: $to");
+        }
+
+        // Conversion Logic
+        if ($from === 'UZS') {
+            return $amount / $currencies[$to];
+        } elseif ($to === 'UZS') {
+            return $amount * $currencies[$from];
+        } else {
+            $uzs_value = $amount * $currencies[$from]; // Convert to UZS first
+            return $uzs_value / $currencies[$to];      // Convert to target currency
+        }
     }
-
-    
-    
-
 }
 
 
-
-$currency = new Currency();
-$currency->exchange(12800);

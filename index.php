@@ -2,18 +2,30 @@
 
 
 
-require 'src/Currency.php';
+//require 'src/Currency.php';
+//
+//$currency = new Currency();
+//
+//$currencies = $currency->getCurrencies();
+//
+//
+//
+//require 'views/currencyConverter.php';
 
-$currency = new Currency();
 
-$currencies = $currency->getCurrencies();
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-
-
-require 'views/currencyConverter.php';
-
-
-
+if ($uri == '/weather') {
+    require 'Weather.php';
+    require 'src/currency.php';
+    $currency = new Currency();
+    $currencies = $currency->getCurrencies();
+}elseif($uri == '/currency'){
+    require 'src/currency.php';
+    require 'views/currencyConverter.php';
+}else{
+    echo '404';
+}
 
 
 

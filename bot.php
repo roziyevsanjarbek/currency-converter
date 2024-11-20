@@ -41,7 +41,7 @@ if ($text == '/currency'){
     $currency_list = "";
 
     foreach($currencies as $currency => $rate){
-        $currency_list .= $currency.": ".$rate."\n";
+        $currency_list .= $currency." = ".$rate." UZS"."\n";
     }
     $bot->makeRequest('sendMessage', [
         'chat_id' => $from_id,
