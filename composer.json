@@ -1,6 +1,7 @@
 {
     "require": {
         "guzzlehttp/guzzle": "7.5",
-      "ext-curl": "*"
+      "ext-curl": "*",
+      "ext-pdo": "*"
     }
 }

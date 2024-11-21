@@ -64,7 +64,8 @@
             <h2>O'zbekiston, Toshkent</h2>
             <div class="icon">🌤</div>
             <h2>Partly Sunny</h2>
-            <?php if ($weatherData): ?>
+            <?php if ($weatherData):
+                ?>
                 <div class="weather-info">
                     <strong>Temperatura:</strong> <?php echo round($weatherData['main']['temp'] - 273.15, 2); ?> °C 🌥
                 </div>

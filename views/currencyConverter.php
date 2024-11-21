@@ -1,44 +1,31 @@
-<?php
-require_once 'Currency.php';
-
-// Initialize the Currency class and fetch available currencies
-try {
-    $currency = new Currency();
-    $currencies = $currency->getCurrencies();
-} catch (Exception $e) {
-    die("Error: " . $e->getMessage());
-}
-
-// Handle form submission
-$converted_amount = null;
-$error_message = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['amount'], $_GET['from'], $_GET['to'])) {
-    $amount = (float)$_GET['amount'];
-    $from = $_GET['from'];
-    $to = $_GET['to'];
-
-    try {
-        $converted_amount = $currency->exchange($amount, $from, $to);
-    } catch (Exception $e) {
-        $error_message = $e->getMessage();
-    }
-}
-?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html> html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .currency-card {
             max-width: 600px;
             margin: 0 auto;
             padding: 30px;
-            background: #fff;
+            background: #fcfafa;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
@@ -57,50 +44,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['amount'], $_GET['from']
             border: none;
         }
     </style>
+
 </head>
 <body>
 <div class="currency-section text-center pt-5 bg-primary-subtle">
     <h1>Currency Converter</h1>
-    <p>Check live foreign exchange rates and convert currencies easily.</p>
+    <p>Need to make an international business payment? Take a look at our live foreign exchange rates.</p>
     <div class="currency-card">
-        <h3>Convert Now</h3>
-        <form method="get">
+        <h3>Make fast and affordable international business payments</h3>
+        <p>Send secure international business payments in XX currencies, all at competitive rates with no hidden
+            fees.</p>
+        <form>
             <div class="row g-3 align-items-center">
                 <div class="col-md-5">
                     <label for="amount" class="form-label visually-hidden">Amount</label>
-                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" value="10000" required>
+                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" value="10000">
                 </div>
                 <div class="col-md-3 text-center">
-                    <select class="form-select" name="from" required>
-                        <option value="" disabled selected>Select currency</option>
-                        <?php foreach ($currencies as $key => $rate): ?>
-                            <option value="<?= $key ?>"><?= $key ?></option>
-                        <?php endforeach; ?>
+                    <select class="form-select" name="from">
+                        <?php
+                        global $currencies;
+                        foreach ($currencies as $key => $rate) {
+                            echo '<option value="' . $key . '">' . $key . '</option>';
+
+                        }
+
+                       ?>
                         <option value="UZS">UZS</option>
                     </select>
                 </div>
                 <div class="col-md-1 text-center">
-                    <span style="font-size: 24px;">⇆</span>
+                    <span style="color: black">⇆</span>
+
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" name="to" required>
-                        <option value="" disabled selected>Select currency</option>
-                        <option value="UZS">UZS</option>
-                        <?php foreach ($currencies as $key => $rate): ?>
-                            <option value="<?= $key ?>"><?= $key ?></option>
-                        <?php endforeach; ?>
+                    <select class="form-select" name="to">
+
+                        <option value="UZS"> UZS </option>
+                        <?php
+                        global $currencies;
+                        foreach ($currencies as $key => $rate){
+
+                            echo '<option value="'. $key. '">'. $key. '</option>';
+
+                        }
+                        ?>
+
                     </select>
                 </div>
             </div>
+            <p class="rate-info mt-2">
+<?php
+
+require_once 'src/currency.php';
+$currency = new Currency();
+if (isset($_GET['amount']) && isset($_GET['from'])) {
+    if ($_GET['from'] == 'UZS'){
+        $total = (int)$_GET["amount"] / (int)$currency->getCurrencies()[$_GET["to"]];
+        echo $_GET["amount"] ." USZ = ". $total ." ". $_GET['to'];
+
+    }
+    else{
+        var_dump($_GET["from"]);
+        $total = (int)$_GET['amount'] * (int)$currency->getCurrencies()[$_GET['from']];
+        echo $_GET['amount'] ." ". $_GET['from'] ." = ". $total ." USZ";
+
+    }
+}
+?>
+                <i class="bi bi-info-circle"></i></p>
+
+
             <button type="submit" class="btn btn-primary btn-primary-custom mt-3">Convert</button>
         </form>
-        <p class="rate-info mt-3">
-            <?php if ($converted_amount !== null): ?>
-                Result: <?= number_format($converted_amount, 2) ?> <?= htmlspecialchars($_GET['to']) ?>
-            <?php elseif ($error_message): ?>
-                <span class="text-danger"><?= htmlspecialchars($error_message) ?></span>
-            <?php endif; ?>
-        </p>
     </div>
 </div>
 <div class="info-section bg-light">
