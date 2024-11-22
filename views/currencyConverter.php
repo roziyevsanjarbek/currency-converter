@@ -10,7 +10,7 @@
 <body>
 
 </body>
-</html> html>
+</html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
