@@ -18,7 +18,7 @@ if ($uri == '/weather') {
     $currencies = $currency->getCurrencies();
     require 'views/currencyConverter.php';
 }elseif ($uri == '/telegram'){
-    require 'bot.php';
+    require 'app/bot.php';
 
 }
 else{

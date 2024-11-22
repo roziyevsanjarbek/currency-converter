@@ -11,13 +11,13 @@ class Weather {
 
     public function __construct(){
 
-        $shahar = isset($_POST['city']) ? $_POST['city'] : 'Toshkent';
+        $shahar = $_POST['city'] ?? 'Toshkent';
         $this->shahar = $shahar;
 
 
         $url = "http://api.openweathermap.org/data/2.5/weather?q={$shahar}&appid=c7a613032bc2a488bd8dbb7bbaccfc6f";
 
-        // Clientni yaratish
+
         $this->client = new Client([
             'base_uri' => $url,
             'timeout'  => 2.0,

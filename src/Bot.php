@@ -25,11 +25,26 @@ class Bot
     }
 
     public function saveUser($user_id, $username): bool {
-        $query = "INSERT INTO currency (user_id, username) VALUES (:user_id, :username)";
-        $db = new DB();
-        return $db->conn->prepare($query)->execute([
-            ':user_id' => $user_id,
-            ':username' => $username
-        ]);
+        if($this->getUser($user_id)) {
+            return false;
+        }
+            $query = "INSERT INTO currency (user_id, username) VALUES (:user_id, :username)";
+            $db = new DB();
+            return $db->conn->prepare($query)->execute([
+                ':user_id' => $user_id,
+                ':username' => $username
+            ]);
+
     }
+
+    public function getUser($user_id): bool|array {
+        $query = "SELECT * FROM currency WHERE user_id = :user_id";
+        $db = new DB();
+        $stmt = $db->conn->prepare($query);
+        $stmt->execute([
+            ':user_id' => $user_id,
+        ]);
+        return $stmt->fetch();
+    }
+
 }

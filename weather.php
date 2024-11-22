@@ -28,7 +28,7 @@
 
 
     <div class="container text-center">
-        <h1 class="my-4">Weather in <span id="city-name">Tashkent</span></h1>
+        <h1 class="my-4">Weather in <span id="city-name">Toshkent</span></h1>
 
         <div class="weather-card text-center">
             <div class="mb-3">
