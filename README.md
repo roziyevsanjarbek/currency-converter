@@ -1,46 +1,84 @@
-# Currency Converter va Weather Application
+# Currency Converter
 
-Bu loyiha ikkita qismdan iborat: `Currency Converter` (Valyuta Konvertori) va `Weather Application` (Ob-Havo Ilovasi). Ushbu dastur PHP va XAMPP yordamida yozilgan va ikkala qism Bootstrap bilan ishlangan.
+**Loyiha tavsifi**  
+Currency Converter loyihasi valyutalarni bir-biriga konvertatsiya qilish imkoniyatini beradi. Shuningdek, foydalanuvchilar uchun ob-havo ma'lumotlarini ham ko'rsatadi. Ushbu loyiha Telegram boti orqali ishlaydi: [Currency Converter Bot](https://t.me/ntCurrencyConverter_bot).
+
+---
+
+## Loyihaning tuzilishi
+
+- **app/** - Botga tegishli asosiy fayllar.
+- **src/** - Loyihaning asosiy klasslari:
+  - `Bot.php` - Bot funksionalligi.
+  - `DB.php` - Ma'lumotlar bazasi bilan ishlash.
+  - `PrayerTime.php`, `Weather.php` - Qo'shimcha ma'lumotlar uchun klasslar.
+  - `currency.php` - Valyuta konvertatsiyasi.
+- **views/** - HTML ko'rinishlar:
+  - `currencyConverter.php` - Valyuta konvertatsiya ko'rinishi.
+  - `weather.php` - Ob-havo ma'lumoti ko'rinishi.
+- **index.php** - Barcha kodni ishga tushiruvchi asosiy fayl.
+
+---
 
 ## Talablar
 
-- PHP 7.4 yoki undan yuqori
-- XAMPP dasturi
-- Internet aloqasi (API orqali ma'lumot olish uchun)
+Loyihani muvaffaqiyatli ishga tushirish uchun quyidagi dasturlar va vositalar kerak bo'ladi:
 
-## Loyiha Qismlari
+- **PHP** (7.4 yoki undan yuqori versiya)
+- **Composer** (PHP kutubxonalarini boshqarish uchun)
+- **Ngrok** (Tashqi ulanishlarni sozlash uchun)
+- **Telegram Bot API** (Botni ulash uchun)
 
-### 1. Currency Converter (Valyuta Konvertori)
-
-Valyuta konvertori foydalanuvchilarga turli valyutalar o'rtasida mablag'ni o'zgartirishga imkon beradi. Foydalanuvchi miqdor va valyutalarni tanlaydi va `Convert` tugmasini bosadi. Dastur valyuta kurslarini olish uchun onlayn API dan foydalanadi.
-
-#### Foydalanilgan Texnologiyalar
-- **PHP** - Valyuta hisob-kitoblari uchun backend qismi.
-- **Bootstrap** - UI dizayn uchun.
-
-### 2. Weather Application (Ob-Havo Ilovasi)
-
-Ob-havo ilovasi foydalanuvchi tomonidan kiritilgan shahar nomiga asoslangan holda, OpenWeather API orqali ob-havo ma'lumotlarini olish va ko'rsatish uchun ishlatiladi. Foydalanuvchi shahar nomini kiritsa, dastur o'sha shahar uchun ob-havo holatini (temperatura, namlik, bosim va shamol tezligi) ko'rsatadi.
-
-#### Foydalanilgan Texnologiyalar
-- **PHP** - Ob-havo ma'lumotlarini olish va qayta ishlash uchun.
-- **Bootstrap** - UI komponentlari uchun.
-- **OpenWeather API** - Ob-havo ma'lumotlarini olish uchun.
+---
 
 ## O'rnatish
 
-1. Loyiha fayllarini yuklab oling va XAMPP `htdocs` papkasiga joylang.
-2. Valyuta konvertori va ob-havo ilovasi uchun kerakli API kalitlarini oling.
-   - OpenWeather API kalitini [bu yerda](https://home.openweathermap.org/api_keys) oling.
-3. API kalitlarini `Weather.php` va `CurrencyConverter.php` fayllarida mos ravishda joylashtiring.
+Loyihani ishlatish uchun quyidagi amallarni bajaring:
 
-## Ishlatish
+### 1. Repositoryni klonlash
+```bash
+git clone https://github.com/roziyevsanjarbek/currency-converter.git
+```
 
-1. XAMPP serverini ishga tushiring va Apache ni yoqing.
-2. Brauzer orqali loyihaga murojaat qiling:
-3. 3. Currency Converter uchun valyutani tanlang va miqdorni kiriting.
-4. Weather Application uchun shahar nomini kiriting va `Get Weather` tugmasini bosing.
+## Loyihaga o'tish
+```bash
+cd currency-converter
+```
+## Composer kutubxonalarini o'rnatish
+``` bash
+composer install
+```
+##  Config fayllarini sozlash
 
+- Ma'lumotlar bazasi ulanish ma'lumotlari
+- Token va API kalitlar
+## Ngrok-ni ishga tushirish
+```bash
+ngrok http 80
+```
+## Telegram webhookni sozlash
+-Ngrok orqali olgan URL-ni Telegram Bot API webhookiga ulang:
+```bash
+curl -F "url=https://your-ngrok-url.com/index.php" https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook
+```
+## Ishga tushirish
 
+- Loyihani ishga tushirish uchun asosiy index.php faylini serverga joylashtiring yoki localhostda ishga tushiring.
+```bash
+php -S localhost:8000
+```
+- So'ngra brauzerda quyidagini oching:
+```bash
+  http://localhost:8000
+```
+## Foydalanish komandasi
+### Telegram botda quyidagi komandalarni ishlatishingiz mumkin:
 
+- /start - Botni ishga tushirish
+- /currency - Valyuta konvertatsiyasi
+- /weather - Ob-havo ma'lumotlari
+
+## Aloqa
+### Savollar va murojaatlar uchun:
+📞 +998 88 629 99 09
 
